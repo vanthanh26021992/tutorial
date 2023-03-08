@@ -52,3 +52,5 @@ public class Book {
 		 return this.getPrice()-this.getPrice()*(x/100);
 	}
 }
+
+
