@@ -25,5 +25,7 @@ public static void main(String[] args) {
 	System.out.println(Arrays.toString(mang1_a));
 	System.out.println(Arrays.toString(mang1_b));
 	System.out.println(Arrays.toString(mang1_c));
+	
+	
 }
 }
