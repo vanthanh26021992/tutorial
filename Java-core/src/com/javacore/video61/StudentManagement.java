@@ -94,7 +94,7 @@ public class StudentManagement {
         	System.out.println("Nhap ma sinh vien can xoa: ");
         	int studentCode3 = sc.nextInt();
         	Student std2 = new Student(studentCode3);
-        	list.remove(std2);
+//        	list.remove(std2);
         	if (list.contains(std2)) {
         		list.remove(std2);
 				System.out.println("Sinh vien co ma so "+studentCode3+" Da duoc xoa");
