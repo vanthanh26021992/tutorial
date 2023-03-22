@@ -1,6 +1,7 @@
 package com.javacore.video61;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class StudentManagement {
@@ -10,41 +11,49 @@ public class StudentManagement {
       ArrayList<Student> list = new ArrayList<Student>(); 
 
       do {
+    	  System.out.println("---------------------------------");
         System.out.println("*** Phan mem quan ly sinh vien ***");
         System.out.println("*** Moi chon ***");
         System.out.println("1: Them sinh vien vao danh sach: ");
         System.out.println("2: Kiem tra danh sach sinh vien co rong hay khong: ");
         System.out.println("3: Lay ra so luong sinh vien tong danh sach: ");
         System.out.println("4: Lam rong danh sach sinh vien: ");
-        System.out.println("5: Tim kiem sinh vien theo ma sinh vien: ");
+        System.out.println("5: Kiem tra sinh vien co ton tai trong danh sach theo ma sinh vien: ");
         System.out.println("6: Tim kiem sinh vien theo ten sinh vien: ");
         System.out.println("7: Xoa sinh vien theo ma sinh vien: ");
         System.out.println("8: Xuat ra danh sach sinh vien theo diem giam dan: ");
+        System.out.println("9: Xuat ra danh sach sinh vien: ");
 
         choose = sc.nextInt();
         switch (choose) {
         case 1:
           System.out.println("1: Them sinh vien vao danh sach: ");
           System.out.println("Nhap vao ma sinh vien: ");
-          int a = sc.nextInt();
+          int studentCode1 = sc.nextInt();
           System.out.println("Nhap vao ten sinh vien: ");
-          String b = sc.nextLine();
-          b = sc.nextLine();
+          String studentName = sc.nextLine();
+          studentName = sc.nextLine();
           System.out.println("Nhap vao nam sinh cua sinh vien: ");
-          int c = sc.nextInt();
+          int dateOfBirth1 = sc.nextInt();
           System.out.println("Nhap vao diem trung binh cua sinh vien: ");
-          Double d = sc.nextDouble();
-          Student std = new Student(a, b, c, d);
+          Double mediumScore1 = sc.nextDouble();
+          Student std = new Student(studentCode1, studentName, dateOfBirth1, mediumScore1);
           list.add(std);
           break;
 
         case 2:
           System.out.println("2: Kiem tra danh sach sinh vien co rong hay khong: ");
-          if (list.size()==0) {
-            System.out.println("list rong");
-          } else {
-            System.out.println("list co chua sinh vien");
-          }
+          if (list.isEmpty()) {
+              System.out.println("list rong");
+            } else {
+              System.out.println("list co chua sinh vien");
+            }
+          
+//          if (list.size()==0) {
+//            System.out.println("list rong");
+//          } else {
+//            System.out.println("list co chua sinh vien");
+//          }
           break;
 
         case 3:
@@ -52,23 +61,58 @@ public class StudentManagement {
           break;
 
         case 4:
-
+        	System.out.println("4: Lam rong danh sach sinh vien: ");
+            list.clear();
           break;
 
         case 5:
-
+        	System.out.println("5: Kiem tra sinh vien co ton tai trong danh sach theo ma sinh vien: ");
+        	System.out.println("Nhap ma sinh vien can tim: ");
+        	int studentCode2 = sc.nextInt();
+        	Student std1 = new Student(studentCode2);
+        	if (list.contains(std1)) {
+				System.out.println("Sinh vien co ma so "+studentCode2+" co ton tai");
+			} else {
+				System.out.println("Sinh vien co ma so "+studentCode2+" khong ton tai");
+			}
           break;
 
         case 6:
-
+        	System.out.println("6: Tim kiem sinh vien theo ten sinh vien: ");
+        	System.out.println("Nhap ten sinh vien can tim: ");
+        	String name = sc.nextLine();
+        	name = sc.nextLine();
+        	for (Student student : list) {
+				if (student.getName().indexOf(name)>=0) {
+					System.out.println(student);
+				}
+			}
           break;
 
         case 7:
-
+        	System.out.println("7: Xoa sinh vien theo ma sinh vien: ");
+        	System.out.println("Nhap ma sinh vien can xoa: ");
+        	int studentCode3 = sc.nextInt();
+        	Student std2 = new Student(studentCode3);
+        	list.remove(std2);
+        	if (list.contains(std2)) {
+        		list.remove(std2);
+				System.out.println("Sinh vien co ma so "+studentCode3+" Da duoc xoa");
+			} else {
+				System.out.println("Sinh vien co ma so "+studentCode3+" khong ton tai");
+			}
           break;
 
         case 8:
-
+        	System.out.println("8: Xuat ra danh sach sinh vien theo diem giam dan: ");
+        	Collections.sort(list);
+        	Collections.reverse(list);
+        	System.out.println(list.toString());
+          break;
+          
+        case 9:
+        	System.out.println("9: Xuat ra danh sach sinh vien: ");
+        	System.out.println(list.toString());
           break;
 
         default:
