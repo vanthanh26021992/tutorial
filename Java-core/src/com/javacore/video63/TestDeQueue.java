@@ -19,11 +19,12 @@ public static void main(String[] args) {
 	 listStudent.offer("Nguyen Van D");
 	 listStudent.offerFirst("Nguyen Van F");
 	 listStudent.offerLast("Nguyen Van G");
+	 listStudent.element();
 	 
 	 while (true) {
 		// poll Lay ra va xoa
 //		 peek lay ra nhung khong xoa
-		String name = listStudent.poll(); 
+		String name = listStudent.poll();
 		if (name==null) {
 			break;
 		}
