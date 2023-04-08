@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "@atlaskit/button": "^16.6.0",
+    "@atlaskit/icon": "^21.11.5",
+    "@atlaskit/textfield": "^5.3.6",
+    "uuid": "^9.0.0"
+  }
+}
