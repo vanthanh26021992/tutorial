@@ -1,47 +1,18 @@
 import React from 'react'
-import Button from '@atlaskit/button';
-import styled, {css} from 'styled-components';
-import CheckIcon from '@atlaskit/icon/glyph/check';
+// import Button from '@atlaskit/button';
+// import CheckIcon from '@atlaskit/icon/glyph/check';
+import { Button } from 'primereact/button';  
 
-const ButtonStyled = styled(Button)`
-    margin-top: 5px;
-    text-align: left;
 
-    &,&:hover {
-        ${p => p.isCompleted && css`
-        text-decoration: line-through;
-        `}
-    }
-
-    &:hover {
-        .check-icon {
-            display: inline-block;
-        }
-    }
-
-    .check-icon {
-        display: none;
-
-        &:hover {
-            background-color: #e2e2e2;
-            border-radius: 3px;
-        }
-    }
-`;
 
 export default function Todo({todo, onCheckBtnClick}) {
   return (
-  <ButtonStyled 
-  isCompleted = {todo.isCompleted}
-  shouldFitContainer
-  iconAfter={
-    !todo.isCompleted && (
-    <span className='check-icon' onClick={() => onCheckBtnClick(todo.id)}>
-        <CheckIcon primaryColor='#4fff4f'></CheckIcon>
-    </span>
-    )
-  }
-  >{todo.name}
-  </ButtonStyled>
+    <Button label={todo.name}  icon="pi pi-pencil" iconPos="right"/>
   );
 }
+// có một bảng danh sách việc cần làm
+/*
+bảng có các cột: tên việc, thời gian làm, trạng thái(todo, done, doing), action (thao tác: sửa, xóa)
+sửa: click vào sửa, hiển thị một popup, trong popup này sửa được thông tin của tên việc vào thời gian làm
+xóa: hiển thị một popup hỏi xác nhận có muốn xóa hay không: OK, CANCEL
+*/

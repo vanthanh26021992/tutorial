@@ -1,14 +1,23 @@
 import Todolist from "./components/Todolist";
-import Textfield from '@atlaskit/textfield';
-import Button from '@atlaskit/button';
+
 import { useCallback, useEffect, useState } from "react";
 import { v4} from 'uuid';
+import "primereact/resources/themes/lara-light-indigo/theme.css";   
+import "primereact/resources/primereact.min.css";
+import "primeicons/primeicons.css";   
+import { Button } from 'primereact/button'; 
+import { InputText } from 'primereact/inputtext';
+import ComponentDemo from "./components/ComponentDemo";
 
 const TODO_APP_STORAGE_KEY = 'TODO_APP';
 
 function App() {
+  // props: truyền dữ liệu từ bên ngoài vào component
+  // html, css, javascript: 
   const [todoList, setTodoList] = useState([]);
-  const [textInput, setTextInput] = useState([]);
+  const [textInput, setTextInput] = useState("");
+
+  
 
   useEffect(() =>{
     const storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);
@@ -32,6 +41,7 @@ function App() {
       ...todoList,
     ]);
     setTextInput("");
+    console.log(todoList);
   },[textInput, todoList]
   );
 
@@ -42,15 +52,12 @@ const onCheckBtnClick = useCallback((id) =>{
   return (
     <>
       <h3>Danh sách cần làm</h3>
-      <Textfield name="add-todo" placeholder="Thêm việc cần làm ..." elemAfterInput={
-        <Button inDisabled={!textInput} appearance="primary" onClick={onAddBtnClick}>
-          Thêm</Button>
-      }
-      css={{pading: "2px 4px 2px"}}
-      value={textInput}
-      onChange={onTextInputChange}
-      ></Textfield>
+      Tên việc: <InputText value={textInput} onChange={(e) => setTextInput(e.target.value)} />
+      Thời gian làm: <InputText value={textInput} onChange={(e) => setTextInput(e.target.value)} />
+
+       <Button label="Them" onClick={onAddBtnClick}/>
       <Todolist todoList={todoList} onCheckBtnClick={onCheckBtnClick} />
+      <ComponentDemo />
     </>
   );
 }
