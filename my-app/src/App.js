@@ -1,11 +1,7 @@
 import Todolist from "./components/Todolist";
-
 import { useCallback, useEffect, useState } from "react";
 import { v4} from 'uuid';
-import "primereact/resources/themes/lara-light-indigo/theme.css";   
-import "primereact/resources/primereact.min.css";
-import "primeicons/primeicons.css";   
-import { Button } from 'primereact/button'; 
+import { Button } from 'primereact/button';
 import { InputText } from 'primereact/inputtext';
 import ComponentDemo from "./components/ComponentDemo";
 
@@ -16,8 +12,6 @@ function App() {
   // html, css, javascript: 
   const [todoList, setTodoList] = useState([]);
   const [textInput, setTextInput] = useState("");
-
-  
 
   useEffect(() =>{
     const storagedTodoList = localStorage.getItem(TODO_APP_STORAGE_KEY);
@@ -30,9 +24,6 @@ function App() {
     localStorage.setItem(TODO_APP_STORAGE_KEY, JSON.stringify(todoList));
   },[todoList]);
 
-  const onTextInputChange = useCallback((e) => {
-    setTextInput(e.target.value);
-  }, []);
 
   const onAddBtnClick = useCallback((e) => {
     // Them text input vao danh sach todoLish
@@ -45,10 +36,12 @@ function App() {
   },[textInput, todoList]
   );
 
-const onCheckBtnClick = useCallback((id) =>{
+  const onCheckBtnClick = useCallback((id) =>{
   setTodoList((prevState) => prevState.map(todo => 
     todo.id ===id ? {...todo, isCompleted: true} : todo));
-}, []);
+  }, []);
+
+  
   return (
     <>
       <h3>Danh sách cần làm</h3>
@@ -63,3 +56,4 @@ const onCheckBtnClick = useCallback((id) =>{
 }
 
 export default App;
+
