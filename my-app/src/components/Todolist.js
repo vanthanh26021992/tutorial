@@ -10,7 +10,7 @@ import { InputText } from "primereact/inputtext";
 import axios from "axios";
 
 export default function Todolist({ todoList, onCheckBtnClick }) {
-  const [visible, setVisible] = useState(false);
+  const [visibleDelete, setVisibleDelete] = useState(false);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [idInput, setIdInput] = useState("");
   const [nameInput, setNameInput] = useState("");
@@ -66,7 +66,7 @@ export default function Todolist({ todoList, onCheckBtnClick }) {
       <Button
         label="No"
         icon="pi pi-times"
-        onClick={() => setVisible(false)}
+        onClick={() => setVisibleDelete(false)}
         className="p-button-text"
       />
       <Button
@@ -85,7 +85,7 @@ export default function Todolist({ todoList, onCheckBtnClick }) {
             })
             .catch((error) => console.log(error));
 
-          setVisible(false);
+          setVisibleDelete(false);
         }}
         autoFocus
       />
@@ -94,7 +94,7 @@ export default function Todolist({ todoList, onCheckBtnClick }) {
 
   const onClickDelete = (todo) => {
     console.log("onclick delete");
-    setVisible(true);
+    setVisibleDelete(true);
     setIdInput(todo.id);
     setNameInput(todo.name);
     setDatetimeInput(todo.datetime);
@@ -159,27 +159,11 @@ export default function Todolist({ todoList, onCheckBtnClick }) {
 
       <Dialog
         header="Header"
-        visible={visible}
+        visible={visibleDelete}
         style={{ width: "50vw" }}
-        onHide={() => setVisible(false)}
+        onHide={() => setVisibleDelete(false)}
         footer={footerContent}
       ></Dialog>
     </>
   );
 }
-
-//json
-// const [data, setData] = useState([
-//   {
-//     id: 1,
-//     name: "Name 1",
-//     datetime: "2023-04-12 12:10",
-//     status: "Done",
-//   },
-//   {
-//     id: 2,
-//     name: "Wash dish",
-//     datetime: "2023-04-12 2:10",
-//     status: "Doing",
-//   },
-// ]);
