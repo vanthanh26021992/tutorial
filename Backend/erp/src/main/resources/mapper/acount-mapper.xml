@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+            "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+<mapper namespace="com.danh.erp.mapper.AcountMapper">
+    <select id="selectAll" resultType="com.danh.erp.dto.Acount">
+        SELECT * FROM Account;
+    </select>
+     
+    <select id="selectByName" resultType="com.danh.erp.dto.Acount">
+        SELECT * FROM Account WHERE name = #{name};
+    </select>
+    
+    <insert id="insert" parameterType="com.danh.erp.dto.Acount" >
+        INSERT INTO Account (name, age,phone,address,male ) VALUES (#{acount.name}, #{acount.age}, #{acount.phone}, #{acount.address}, #{acount.male});
+    </insert>
+ 
+    <update id="update" parameterType="com.danh.erp.dto.Acount">
+        UPDATE Account SET name = #{acount.name}, age = #{acount.age}, phone = #{acount.phone}, address = #{acount.address}, male = #{acount.male} WHERE name = #{acount.name};
+    </update>
+     
+    <delete id="deleteByName" parameterType="String">
+        DELETE from Account WHERE name = #{name};
+    </delete>
+     
+</mapper>
