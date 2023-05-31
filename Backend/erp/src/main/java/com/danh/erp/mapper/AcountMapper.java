@@ -6,13 +6,15 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
-import com.danh.erp.dto.Acount;
+import com.danh.erp.dto.Account;
 
 @Mapper
 public interface AcountMapper {
-  List<Acount> selectAll();
-  Acount selectByName(@Param("name") String name);
-  int insert(@Param("acount") Acount acount);
-  int update(@Param("acount") Acount acount);
-  int deleteByName(@Param("name") String name);
+  List<Account> selectAll();
+  Account selectByAccount(@Param("account") Account acount);
+  Account selectByUsername(@Param("username") String username);
+  Account selectByUsernameAndPass(@Param("username") String username,@Param("password") String password);
+  int insert(@Param("account") Account acount);
+  int update(@Param("account") Account acount);
+  int deleteById(@Param("id") int id);
 }

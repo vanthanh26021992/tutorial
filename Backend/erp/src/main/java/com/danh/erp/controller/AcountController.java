@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.danh.erp.dto.Acount;
+import com.danh.erp.dto.Account;
 import com.danh.erp.mapper.AcountMapper;
 
 @CrossOrigin(origins = "http://localhost:3000,http://localhost:3001,http://localhost:3002")
@@ -20,29 +21,40 @@ public class AcountController {
 
   @Autowired
   private AcountMapper mapper;
+  
 
   @GetMapping("get-all")
-  public List<Acount> selectAll() {
+  public List<Account> selectAll() {
     return mapper.selectAll();
   }
 
-  @GetMapping("get-by-username/{name}")
-  public Acount selectByName(@PathVariable("name") String name) {
-    return mapper.selectByName(name);
+  @GetMapping("get-account")
+  public Account selectByName(@RequestBody Account account) {
+    return mapper.selectByAccount(account);
+  }
+  
+  @GetMapping("getbyusername/{username}")
+  public Account selectByUsername(@PathVariable String username) {
+    return mapper.selectByUsername(username);
+  }
+  
+  @GetMapping("get-account-by-name-pass/{username}/{password}")
+  public Account selectByUsernameAndPass(@PathVariable String username,@PathVariable String password) {
+    return mapper.selectByUsernameAndPass(username,password);
   }
 
   @PostMapping("insert")
-  public void insert(Acount acount) {
-    mapper.insert(acount);
+  public void insert(@RequestBody Account account) {
+    mapper.insert(account);
   }
 
   @PutMapping("update")
-  public void update(Acount acount) {
-    mapper.update(acount);
+  public void update(@RequestBody Account account) {
+    mapper.update(account);
   }
 
-  @DeleteMapping("delete/{name}")
-  public void deleteByName(@PathVariable("name") String name) {
-    mapper.deleteByName(name);
+  @DeleteMapping("delete/{id}")
+  public void deleteById(@PathVariable("id") int id) {
+    mapper.deleteById(id);
   }
 }

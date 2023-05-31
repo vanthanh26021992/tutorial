@@ -11,3 +11,9 @@ public class ErpApplication {
 	}
 
 }
+
+/* ERP: account, employee, customer, supplier, inventory, invoice, restaurent, 
+ * product
+ * catetory: tien dien, inventory
+ * type: IN, OUT
+ */
