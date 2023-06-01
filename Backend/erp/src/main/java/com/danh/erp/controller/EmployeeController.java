@@ -30,7 +30,7 @@ public class EmployeeController {
   }
   // layer
   @GetMapping("getEmployeeById/{id}")
-  public Employee selectById(@PathVariable int id){
+  public Employee selectById(@PathVariable Long id){
     return eMapper.selectById(id);
   }
   @GetMapping("getEmployeeByUsername/{username}")
@@ -48,9 +48,9 @@ public class EmployeeController {
     employeeService.insert(employee);
   }
   
-  @DeleteMapping("deleteEmployee/{id}")
-  public void delete(@PathVariable int id){
-     eMapper.deleteById(id);
+  @DeleteMapping("delete-employee-by-accountId/{accountId}")
+  public void delete(@PathVariable Long accountId){
+     eMapper.deleteByAccountId(accountId);
   }
   
   @PutMapping("updateEmployee")

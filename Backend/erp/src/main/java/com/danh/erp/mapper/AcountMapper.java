@@ -16,5 +16,5 @@ public interface AcountMapper {
   Account selectByUsernameAndPass(@Param("username") String username,@Param("password") String password);
   int insert(@Param("account") Account acount);
   int update(@Param("account") Account acount);
-  int deleteById(@Param("id") int id);
+  int deleteById(@Param("id") Long id);
 }

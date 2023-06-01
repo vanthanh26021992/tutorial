@@ -1,8 +1,8 @@
 package com.danh.erp.dto;
 
 public class Employee {
-  private int id;
-  private long accountId;
+  private Long id;
+  private Long accountId;
   private String username;
   private String password;
   private String fullname;
@@ -19,7 +19,7 @@ public class Employee {
   public Employee() {
   }
 
-  public Employee(int id, long accountId, String username, String password, String fullname, int age, String phone,
+  public Employee(Long id, long accountId, String username, String password, String fullname, int age, String phone,
       String address, String gender, String startDate, String department, String endDate, Long salary, String status) {
     this.id = id;
     this.accountId = accountId;
@@ -37,7 +37,7 @@ public class Employee {
     this.status = status;
   }
 
-  public Employee(int id, long accountId, String startDate, String department, String endDate, Long salary,
+  public Employee(Long id, long accountId, String startDate, String department, String endDate, Long salary,
       String status) {
     this.id = id;
     this.accountId = accountId;
@@ -48,11 +48,11 @@ public class Employee {
     this.status = status;
   }
 
-  public int getId() {
+  public Long getId() {
     return id;
   }
 
-  public void setId(int id) {
+  public void setId(Long id) {
     this.id = id;
   }
   

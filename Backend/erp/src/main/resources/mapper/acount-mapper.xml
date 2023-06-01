@@ -33,7 +33,7 @@
 		gender = #{account.gender} WHERE id = #{account.id};
 	</update>
 
-	<delete id="deleteById" parameterType="int" >
+	<delete id="deleteById" parameterType="Long" >
 		delete from account where id = #{id};
 	</delete>
 

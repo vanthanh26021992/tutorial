@@ -11,7 +11,7 @@
 		`password` = #{employee.password};
 	</select>
 
-	<select id="selectById" resultType="com.danh.erp.dto.Employee" parameterType="int">
+	<select id="selectById" resultType="com.danh.erp.dto.Employee" parameterType="Long">
 		SELECT * FROM employee WHERE id = #{id};
 	</select>
 	
@@ -36,8 +36,8 @@
 		UPDATE employee SET startDate = #{employee.startDate},department = #{employee.department},endDate = #{employee.endDate}, salary =#{employee.salary}, status = #{employee.status} WHERE accountId = #{employee.accountId};
 	</update>
 
-	<delete id="deleteById" parameterType="int" >
-		delete from employee where id = #{id};
+	<delete id="deleteByAccountId" parameterType="Long" >
+		delete from employee where accountId = #{accountId};
 	</delete>
 
 </mapper>

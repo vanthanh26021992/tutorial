@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.danh.erp.dto.Account;
 import com.danh.erp.mapper.AcountMapper;
+import com.danh.erp.mapper.EmployeeMapper;
 
 @CrossOrigin(origins = "http://localhost:3000,http://localhost:3001,http://localhost:3002")
 @RestController
@@ -21,7 +22,8 @@ public class AcountController {
 
   @Autowired
   private AcountMapper mapper;
-  
+  @Autowired
+  private EmployeeMapper eMapper;
 
   @GetMapping("get-all")
   public List<Account> selectAll() {
@@ -54,7 +56,8 @@ public class AcountController {
   }
 
   @DeleteMapping("delete/{id}")
-  public void deleteById(@PathVariable("id") int id) {
+  public void deleteById(@PathVariable("id") Long id) {
     mapper.deleteById(id);
+    eMapper.deleteByAccountId(id);
   }
 }
