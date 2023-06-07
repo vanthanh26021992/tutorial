@@ -132,6 +132,9 @@ function Account(props) {
   return (
     <div className="App">
       <div className="card">
+        Text
+      </div>
+      <div className="card">
         <DataTable value={props.data} tableStyle={{ minWidth: "50rem" }}>
           <Column field="id" header="ID"></Column>
           <Column field="username" header="Username"></Column>

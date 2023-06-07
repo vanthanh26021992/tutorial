@@ -41,13 +41,6 @@ body {
   font-family: var(--font-family);
 }
 
-.card {
-  background: var(--surface-card);
-  padding: 2rem;
-  border-radius: 10px;
-  margin-bottom: 1rem;
-  text-align: center;
-}
 
 .footerContentDialog {
   text-align: center;

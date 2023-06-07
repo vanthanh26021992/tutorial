@@ -7,6 +7,7 @@ import Employee from "../components/employee/Employee";
 import "./App.css";
 import axios from "axios";
 import { CONFIG } from "../ultils/constants";
+import MenuComponent from "../components/menu/menu";
 
 function App(props) {
   const [data, setData] = useState([]);
@@ -40,22 +41,8 @@ function App(props) {
   };
 
   return (
-    <div className="App">
-      <header>
-        <Login getAccounts={getAccounts} data={data} />
-        {/* <Login1 /> */}
-        <Account
-          getAccounts={getAccounts}
-          data={data}
-          getEmployee={getEmployee}
-        />
-        {/* <LoginEmployee /> */}
-        <Employee
-          getEmployee={getEmployee}
-          dataEmployee={dataEmployee}
-          getAccounts={getAccounts}
-        />
-      </header>
+    <div className="App" style={({ height: "100vh" }, { display: "flex" })}>
+      <MenuComponent />
     </div>
   );
 }
