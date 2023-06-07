@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.danh.erp.mapper.AcountMapper">
+	<select id="selectAll" resultType="com.danh.erp.dto.Account">
+		SELECT * FROM Account;
+	</select>
+
+	<select id="selectByAccount" resultType="com.danh.erp.dto.Account" parameterType="String">
+		select * from account where username = #{account.username} and
+		`password` = #{account.password};
+	</select>
+
+	<select id="selectByUsername" resultType="com.danh.erp.dto.Account" parameterType="String">
+		SELECT * FROM ACCOUNT WHERE USERNAME = #{username};
+	</select>
+
+	<select id="selectByUsernameAndPass"
+		resultType="com.danh.erp.dto.Account" parameterType="String">
+		select * from ACCOUNT where username = #{username} and `password` =
+		#{password};
+	</select>
+
+	<insert id="insert" parameterType="com.danh.erp.dto.Account" useGeneratedKeys="true" keyProperty="account.id" keyColumn="ID">
+		INSERT INTO Account (username, password, fullname, age, phone, address, gender )
+		VALUES (#{account.username},#{account.password},#{account.fullname},#{account.age}, #{account.phone}, #{account.address},#{account.gender})
+	</insert>
+
+	<update id="update" parameterType="com.danh.erp.dto.Account" useGeneratedKeys="true" keyProperty="account.id" keyColumn="ID">
+		UPDATE Account SET username = #{account.username},password =
+		#{account.password},fullname = #{account.fullname}, age =
+		#{account.age}, phone = #{account.phone}, address = #{account.address},
+		gender = #{account.gender} WHERE id = #{account.id};
+	</update>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from account where id = #{id};
+	</delete>
+
+</mapper>
