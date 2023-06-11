@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.danh.erp.dto.Employee;
+import com.danh.erp.mapper.AcountMapper;
 import com.danh.erp.mapper.EmployeeMapper;
 import com.danh.erp.service.EmployeeService;
 @CrossOrigin(origins = "http://localhost:3000,http://localhost:3001,http://localhost:3002")
@@ -20,7 +21,8 @@ import com.danh.erp.service.EmployeeService;
 public class EmployeeController {
   @Autowired
   private EmployeeMapper eMapper;
-  
+  @Autowired
+  private AcountMapper mapper;
   @Autowired
   private EmployeeService employeeService;
   
@@ -51,6 +53,7 @@ public class EmployeeController {
   @DeleteMapping("delete-employee-by-accountId/{accountId}")
   public void delete(@PathVariable Long accountId){
      eMapper.deleteByAccountId(accountId);
+     mapper.deleteById(accountId);
   }
   
   @PutMapping("updateEmployee")

@@ -5,10 +5,12 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CONFIG } from "../ultils/constants";
+import SignUp from "./SignUp";
 
-function Account(props) {
+function Account() {
+  const [data, setData] = useState([]);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [visibleDelete, setVisibleDelete] = useState(false);
   const [id, setId] = useState();
@@ -20,6 +22,19 @@ function Account(props) {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
+
+  const getAccounts = () => {
+    axios
+      .get(`${CONFIG.SERVER}/get-all`)
+      .then(function (response) {
+        setData(response.data);
+      })
+      .catch(function (error) {});
+  };
+  useEffect(() => {
+    getAccounts();
+    // console.log("data account ", data);
+  }, []);
 
   const bodyAccount = (todo) => (
     <>
@@ -94,8 +109,7 @@ function Account(props) {
       )
       .then((response) => {
         setVisibleEdit(false);
-        props.getAccounts();
-        props.getEmployee();
+        getAccounts();
       })
       .catch((error) => console.log(error));
   };
@@ -123,8 +137,7 @@ function Account(props) {
       .delete(`${CONFIG.SERVER}/delete/${id}`, headers)
       .then((response) => {
         setVisibleDelete(false);
-        props.getAccounts();
-        props.getEmployee();
+        getAccounts();
       })
       .catch((error) => console.log(error));
   };
@@ -132,10 +145,10 @@ function Account(props) {
   return (
     <div className="App">
       <div className="card">
-        Text
+        <SignUp />
       </div>
       <div className="card">
-        <DataTable value={props.data} tableStyle={{ minWidth: "50rem" }}>
+        <DataTable value={data} tableStyle={{ minWidth: "50rem" }}>
           <Column field="id" header="ID"></Column>
           <Column field="username" header="Username"></Column>
           <Column field="password" header="Password"></Column>

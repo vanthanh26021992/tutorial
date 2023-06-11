@@ -32,18 +32,6 @@ function SignUpEmployee({ getEmployee, getAccounts }) {
   const statusList = [{ name: "On" }, { name: "Off" }];
 
   const onClickSignUpEmployee = (todo) => {
-    console.log("onClickSignUpEmployee Emp");
-    console.log("todo.username: " + todo.username);
-    console.log("username: " + username);
-    console.log("password: " + password);
-    console.log("gender: " + gender);
-    console.log("gender.name: " + gender.name);
-    console.log("status: " + status);
-    console.log("status.name: " + status.name);
-    console.log("department: " + department);
-    console.log("endDate: " + endDate);
-    console.log("salary: " + salary);
-
     if (password !== rePassword) {
       setMessagePass("Pass and re-pass do not match!");
       // setVisibleSignUpEmployee(true);
@@ -94,7 +82,6 @@ function SignUpEmployee({ getEmployee, getAccounts }) {
         { headers }
       )
       .then((response) => {
-        console.log(response);
         getEmployee();
         getAccounts();
       })

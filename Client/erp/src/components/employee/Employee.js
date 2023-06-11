@@ -5,11 +5,12 @@ import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CONFIG } from "../../ultils/constants";
 import SignUpEmployee from "./SignUpEmployee";
 
-function Employee(props) {
+function Employee() {
+  const [dataEmployee, setDataEmployee] = useState([]);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [visibleDelete, setVisibleDelete] = useState(false);
   const [id, setId] = useState();
@@ -27,6 +28,19 @@ function Employee(props) {
   const [endDate, setEndDate] = useState("");
   const [salary, setSalary] = useState();
   const [status, setStatus] = useState("");
+
+  useEffect(() => {
+    getEmployee();
+  }, []);
+
+  const getEmployee = () => {
+    axios
+      .get(`${CONFIG.SERVER}/getAllEmployee`)
+      .then(function (response) {
+        setDataEmployee(response.data);
+      })
+      .catch(function (error) {});
+  };
 
   const bodyEmployee = (todo) => (
     <>
@@ -48,14 +62,7 @@ function Employee(props) {
     </>
   );
 
-  const onClickShowPopupDelete = (todo) => {
-    setId(todo.id);
-    setVisibleDelete(true);
-  };
-
   const onclickEdit = (todo) => {
-    console.log("todo.id ", todo.id);
-    console.log("todo.accountId ", todo.accountId);
     setId(todo.id);
     setAccountId(todo.accountId);
     setUsername(todo.username);
@@ -76,24 +83,21 @@ function Employee(props) {
   const footerContentEdit = (todo) => (
     <div className="footerContentDialog">
       <Button
-        label="No"
-        icon="pi pi-times"
-        onClick={() => setVisibleEdit(false)}
-        className="p-button-text"
-      />
-      <Button
         label="Yes"
         icon="pi pi-check"
         onClick={() => onClickUpdate(todo)}
         autoFocus
       />
+      <Button
+        label="No"
+        icon="pi pi-times"
+        onClick={() => setVisibleEdit(false)}
+        className="p-button-text"
+      />
     </div>
   );
 
   const onClickUpdate = (todo) => {
-    console.log(accountId);
-    console.log(username);
-    console.log(fullname);
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
       .put(
@@ -116,9 +120,7 @@ function Employee(props) {
         { headers }
       )
       .then((response) => {
-        console.log("accountId ", accountId);
-        props.getEmployee();
-        props.getAccounts();
+        getEmployee();
         setVisibleEdit(false);
       })
       .catch((error) => console.log(error));
@@ -141,28 +143,27 @@ function Employee(props) {
     </div>
   );
 
+  const onClickShowPopupDelete = (todo) => {
+    setId(todo.id);
+    setVisibleDelete(true);
+  };
+
   const onClickDelete = (todo) => {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
-      .delete(`${CONFIG.SERVER}/deleteEmployee/${id}`, headers)
+      .delete(`${CONFIG.SERVER}/delete-employee-by-accountId/${id}`, headers)
       .then((response) => {
         setVisibleDelete(false);
-        props.getEmployee();
+        getEmployee();
       })
       .catch((error) => console.log(error));
   };
 
   return (
     <div className="App">
-      <SignUpEmployee
-        getEmployee={props.getEmployee}
-        getAccounts={props.getAccounts}
-      />
+      <SignUpEmployee getEmployee={getEmployee} />
       <div className="card">
-        <DataTable
-          value={props.dataEmployee}
-          tableStyle={{ minWidth: "50rem" }}
-        >
+        <DataTable value={dataEmployee} tableStyle={{ minWidth: "50rem" }}>
           <Column field="id" header="ID"></Column>
           <Column field="username" header="Username"></Column>
           <Column field="password" header="Password"></Column>
