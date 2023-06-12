@@ -4,7 +4,6 @@ import { InputText } from "primereact/inputtext";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import React, { useState } from "react";
-import SignUp from "../components/SignUp";
 import { CONFIG } from "../ultils/constants";
 
 function Login(props) {
@@ -12,37 +11,37 @@ function Login(props) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [isShowLoginForm, setShowLoginForm] = useState(false);
-  const { getAccounts } = props;
 
   const onclickLoginAccount = (event) => {
     event.preventDefault();
-    console.log(username);
+    console.log("usename ", username);
     console.log(password);
     axios
       .get(`${CONFIG.SERVER}/get-account-by-name-pass/${username}/${password}`)
       .then(function (response) {
         if (!response.data) {
           setMessage("Error password or user");
-          setShowLoginForm(false);
         } else {
           setUser1(response.data);
           setUsername("");
           setPassword("");
           setMessage("Login success " + response.data.fullname);
-          setShowLoginForm(true);
+          console.log("user1 ", user1);
         }
       })
-      .catch(function (error) {
-        setShowLoginForm(false);
-      });
+      .catch(function (error) {});
   };
 
   return (
     <div>
-      <header className={isShowLoginForm ? "hidden" : undefined}>
-        <div className="card  login">
+      <header className={user1.username === undefined ? "show" : "hidden"}>
+        <div className="App login">
           <h1>Login account</h1>
+          {console.log(
+            "user1.username == undefined",
+            user1.username === undefined
+          )}
+          {console.log("user1", user1.username)}
           <form onSubmit={onclickLoginAccount}>
             <div className=" flex ">
               <div className="in-block"></div>
@@ -76,10 +75,9 @@ function Login(props) {
             </div>
             <Button label="Submit" type="submit" />
           </form>
-          <SignUp getAccounts={getAccounts} />
         </div>
       </header>
-      <div className={isShowLoginForm ? undefined : "hidden"}>
+      <div className={user1.username ? "show" : "hidden"}>
         Wellcome {user1.username} to ERP
       </div>
     </div>
