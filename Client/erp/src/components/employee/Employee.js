@@ -35,7 +35,7 @@ function Employee() {
 
   const getEmployee = () => {
     axios
-      .get(`${CONFIG.SERVER}/getAllEmployee`)
+      .get(`${CONFIG.SERVER}/employee/get-all`)
       .then(function (response) {
         setDataEmployee(response.data);
       })
@@ -101,7 +101,7 @@ function Employee() {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
       .put(
-        `${CONFIG.SERVER}/updateEmployee`,
+        `${CONFIG.SERVER}/employee/update`,
         JSON.stringify({
           accountId: accountId,
           username: username,
@@ -151,7 +151,7 @@ function Employee() {
   const onClickDelete = (todo) => {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
-      .delete(`${CONFIG.SERVER}/delete-employee-by-accountId/${id}`, headers)
+      .delete(`${CONFIG.SERVER}/employee/delete-by-accountId/${id}`, headers)
       .then((response) => {
         setVisibleDelete(false);
         getEmployee();

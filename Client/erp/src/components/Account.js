@@ -8,6 +8,7 @@ import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { CONFIG } from "../ultils/constants";
 import SignUp from "./SignUp";
+import AccountSevice from "../services/accountService";
 
 function Account() {
   const [data, setData] = useState([]);
@@ -23,17 +24,12 @@ function Account() {
   const [address, setAddress] = useState("");
   const [gender, setGender] = useState("");
 
-  const getAccounts = () => {
-    axios
-      .get(`${CONFIG.SERVER}/get-all`)
-      .then(function (response) {
-        setData(response.data);
-      })
-      .catch(function (error) {});
+  const getAccounts = async () => {
+    const accounts = await AccountSevice.getAccounts();
+    setData(accounts);
   };
   useEffect(() => {
     getAccounts();
-    // console.log("data account ", data);
   }, []);
 
   const bodyAccount = (todo) => (

@@ -19,7 +19,7 @@ function SignUpSupplier({ getSupplier }) {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
       .post(
-        `${CONFIG.SERVER}/insert-supplier`,
+        `${CONFIG.SERVER}/supplier/insert`,
         JSON.stringify({
           supplierCode: supplierCode,
           supplierName: supplierName,

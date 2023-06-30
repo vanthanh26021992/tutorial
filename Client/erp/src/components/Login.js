@@ -4,29 +4,43 @@ import { InputText } from "primereact/inputtext";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CONFIG } from "../ultils/constants";
 
-function Login(props) {
+function Login() {
   const [user1, setUser1] = useState({});
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   let user = localStorage.getItem("account");
+  //   if (user) setUser1(JSON.parse(user));
+  // }, []);
+
+  const storeUser = (user) => {
+    localStorage.setItem("account", JSON.stringify(user));
+  };
+  // let history = useHistory();
+
   const onclickLoginAccount = (event) => {
     event.preventDefault();
-    console.log("usename ", username);
-    console.log(password);
     axios
       .get(`${CONFIG.SERVER}/get-account-by-name-pass/${username}/${password}`)
       .then(function (response) {
         if (!response.data) {
           setMessage("Error password or user");
         } else {
+          console.log(response.data);
           setUser1(response.data);
           setUsername("");
           setPassword("");
           setMessage("Login success " + response.data.fullname);
           console.log("user1 ", user1);
+          storeUser(response.data);
+          navigate("/home");
         }
       })
       .catch(function (error) {});
@@ -34,14 +48,9 @@ function Login(props) {
 
   return (
     <div>
-      <header className={user1.username === undefined ? "show" : "hidden"}>
+      <header>
         <div className="App login">
           <h1>Login account</h1>
-          {console.log(
-            "user1.username == undefined",
-            user1.username === undefined
-          )}
-          {console.log("user1", user1.username)}
           <form onSubmit={onclickLoginAccount}>
             <div className=" flex ">
               <div className="in-block"></div>
@@ -77,9 +86,6 @@ function Login(props) {
           </form>
         </div>
       </header>
-      <div className={user1.username ? "show" : "hidden"}>
-        Wellcome {user1.username} to ERP
-      </div>
     </div>
   );
 }

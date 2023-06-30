@@ -47,7 +47,7 @@ body {
 .labelInputEmployee {
   text-align: left;
 }
-.flex {
+/* .flex {
   display: inline-flex;
   width: 100%;
   margin-bottom: 10px;
@@ -55,7 +55,7 @@ body {
 .in-block {
   display: inline-block;
   width: 25%;
-}
+} */
 input {
   width: 100%;
 }
@@ -72,8 +72,4 @@ Dropdown {
 
 .hidden {
   display: none;
-}
-
-.menu {
-  width: 100%;
 }

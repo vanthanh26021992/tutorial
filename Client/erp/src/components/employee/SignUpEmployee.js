@@ -64,7 +64,7 @@ function SignUpEmployee({ getEmployee, getAccounts }) {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
       .post(
-        `${CONFIG.SERVER}/insertEmployee`,
+        `${CONFIG.SERVER}/employee/insert`,
         JSON.stringify({
           username: username,
           password: password,

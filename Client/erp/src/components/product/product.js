@@ -7,33 +7,32 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { CONFIG } from "../../ultils/constants";
-import SignUpSupplier from "./SignUpSupplier";
+import CreateProduct from "./CreateProduct";
 
-function Supplier() {
-  const [dataSupplier, setDataSupplier] = useState([]);
+function Product() {
+  const [dataProduct, setDataProduct] = useState([]);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [visibleDelete, setVisibleDelete] = useState(false);
   const [id, setId] = useState();
-  const [supplierCode, setSupplierCode] = useState("");
-  const [supplierName, setSupplierName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [productCode, setProductCode] = useState("");
+  const [productName, setProductName] = useState("");
+  const [unit, setUnit] = useState("");
+  const [buyPrice, setBuyPrice] = useState("");
 
   useEffect(() => {
-    getSupplier();
+    getProduct();
   }, []);
 
-  const getSupplier = () => {
+  const getProduct = () => {
     axios
-      .get(`${CONFIG.SERVER}/supplier/get-all`)
+      .get(`${CONFIG.SERVER}/product/get-all`)
       .then(function (response) {
-        setDataSupplier(response.data);
+        setDataProduct(response.data);
       })
       .catch(function (error) {});
   };
 
-  const bodySupplier = (todo) => (
+  const bodyProduct = (todo) => (
     <>
       <Button
         icon="pi pi-user-edit"
@@ -55,11 +54,10 @@ function Supplier() {
 
   const onclickEdit = (todo) => {
     setId(todo.id);
-    setSupplierCode(todo.supplierCode);
-    setSupplierName(todo.supplierName);
-    setAddress(todo.address);
-    setEmail(todo.email);
-    setPhone(todo.phone);
+    setProductCode(todo.productCode);
+    setProductName(todo.productName);
+    setUnit(todo.unit);
+    setBuyPrice(todo.buyPrice);
     setVisibleEdit(true);
   };
 
@@ -84,19 +82,18 @@ function Supplier() {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
       .put(
-        `${CONFIG.SERVER}/supplier/update`,
+        `${CONFIG.SERVER}/update-product`,
         JSON.stringify({
           id: id,
-          supplierCode: supplierCode,
-          supplierName: supplierName,
-          address: address,
-          email: email,
-          phone: phone,
+          productCode: productCode,
+          productName: productName,
+          unit: unit,
+          buyPrice: buyPrice,
         }),
         { headers }
       )
       .then((response) => {
-        getSupplier();
+        getProduct();
         setVisibleEdit(false);
       })
       .catch((error) => console.log(error));
@@ -127,33 +124,32 @@ function Supplier() {
   const onClickDelete = (todo) => {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
-      .delete(`${CONFIG.SERVER}/supplier/delete-by-id/${id}`, headers)
+      .delete(`${CONFIG.SERVER}/delete-product-by-id/${id}`, headers)
       .then((response) => {
         setVisibleDelete(false);
-        getSupplier();
+        getProduct();
       })
       .catch((error) => console.log(error));
   };
 
   return (
     <div className="App">
-      <SignUpSupplier getSupplier={getSupplier} />
+      <CreateProduct getProduct={getProduct} />
       <div className="card">
-        <DataTable value={dataSupplier} tableStyle={{ minWidth: "50rem" }}>
+        <DataTable value={dataProduct} tableStyle={{ minWidth: "50rem" }}>
           <Column field="id" header="ID"></Column>
-          <Column field="supplierCode" header="SupplierCode"></Column>
-          <Column field="supplierName" header="SupplierName"></Column>
-          <Column field="address" header="Address"></Column>
-          <Column field="email" header="Email"></Column>
-          <Column field="phone" header="Phone"></Column>
-          <Column header="Active" body={bodySupplier}></Column>
+          <Column field="productCode" header="productCode"></Column>
+          <Column field="productName" header="productName"></Column>
+          <Column field="unit" header="unit"></Column>
+          <Column field="buyPrice" header="buyPrice"></Column>
+          <Column header="Active" body={bodyProduct}></Column>
         </DataTable>
       </div>
 
       {/* Edit */}
       <div className="card flex justify-content-center">
         <Dialog
-          header="Edit"
+          header="Header"
           style={{ width: "50vw", textAlign: "center" }}
           visible={visibleEdit}
           onHide={() => setVisibleEdit(false)}
@@ -162,57 +158,46 @@ function Supplier() {
           <div className="">
             <div className="flex flex-column gap-2">
               <div className="in-block">
-                <label className="labelInputSupplier">SupplierCode: </label>{" "}
+                <label className="labelInputProduct">productCode: </label>{" "}
                 <br />
                 <InputText
-                  aria-describedby="username-help"
-                  value={supplierCode}
-                  onChange={(e) => setSupplierCode(e.target.value)}
+                  aria-describedby="productCode-help"
+                  value={productCode}
+                  onChange={(e) => setProductCode(e.target.value)}
+                  disabled
                 />
               </div>
               <div className="in-block">
-                <label className="labelInputSupplier">SupplierName: </label>{" "}
+                <label className="labelInputProduct">productName: </label>{" "}
                 <br />
                 <InputText
-                  type="text"
-                  aria-describedby="password-help"
-                  value={supplierName}
-                  onChange={(e) => setSupplierName(e.target.value)}
+                  type="productName"
+                  aria-describedby="productName-help"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
                 />
-                <small id="password-help"></small>
+                <small id="productName-help"></small>
               </div>
 
               <div className="in-block">
-                <label className="labelInputSupplier">Address: </label> <br />
+                <label className="labelInputProduct">unit: </label> <br />
                 <InputText
-                  type="text"
-                  aria-describedby="rePassword-help"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  id="unit"
+                  aria-describedby="unit-help"
+                  value={unit}
+                  onChange={(e) => setUnit(e.target.value)}
                 />
+                <small id="unit-help"></small>
               </div>
-              <div className="in-block">
-                <label className="labelInputSupplier">Email: </label> <br />
-                <InputText
-                  id="email"
-                  aria-describedby="email-help"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <small id="email-help"></small>
-              </div>
-            </div>
 
-            <div className="flex flex-column gap-2">
               <div className="in-block">
-                <label className="labelInputSupplier">Phone: </label> <br />
+                <label className="labelInputProduct">buyPrice: </label> <br />
                 <InputText
-                  id="phone"
-                  aria-describedby="phone-help"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  id="buyPrice"
+                  aria-describedby="buyPrice-help"
+                  value={buyPrice}
+                  onChange={(e) => setBuyPrice(e.target.value)}
                 />
-                <small id="phone-help"></small>
               </div>
             </div>
           </div>
@@ -233,4 +218,4 @@ function Supplier() {
   );
 }
 
-export default Supplier;
+export default Product;

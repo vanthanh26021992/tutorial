@@ -4,11 +4,12 @@ import { useState } from "react";
 
 const AccountSevice = {
   async getAccounts() {
-    console.log("Get account AccountSevice");
-    await axios.get(`${CONFIG.SERVER}/get-all`).then((response) => {
-      console.log("response.data", response.data);
-      return response.data;
-    });
+    let data;
+    await axios
+      .get(`${CONFIG.SERVER}/account/get-all`)
+      .then((res) => (data = res.data))
+      .catch((err) => console.log(err));
+    return data;
   },
 };
 

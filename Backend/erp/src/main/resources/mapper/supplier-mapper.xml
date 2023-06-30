@@ -7,7 +7,7 @@
 	</select>
 
 	<select id="selectByCode" resultType="com.danh.erp.dto.Supplier" parameterType="String">
-		select * from supplier where supplierCode = code;
+		select * from supplier where supplierCode = #{code};
 	</select>
 
 	<select id="selectById" resultType="com.danh.erp.dto.Supplier" parameterType="Long">
