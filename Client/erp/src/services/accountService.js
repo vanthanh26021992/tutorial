@@ -1,6 +1,5 @@
 import axios from "axios";
 import { CONFIG } from "../ultils/constants";
-import { useState } from "react";
 
 const AccountSevice = {
   async getAccounts() {

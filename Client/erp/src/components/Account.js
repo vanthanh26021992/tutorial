@@ -28,6 +28,7 @@ function Account() {
     const accounts = await AccountSevice.getAccounts();
     setData(accounts);
   };
+
   useEffect(() => {
     getAccounts();
   }, []);
