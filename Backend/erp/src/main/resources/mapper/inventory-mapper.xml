@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.danh.erp.mapper.SupplierMapper">
+	<select id="selectAll" resultType="com.danh.erp.dto.Supplier">
+		select * from supplier;
+	</select>
+
+	<select id="selectByCode" resultType="com.danh.erp.dto.Supplier" parameterType="String">
+		select * from supplier where supplierCode = #{code};
+	</select>
+
+	<select id="selectById" resultType="com.danh.erp.dto.Supplier" parameterType="Long">
+		SELECT * FROM supplier WHERE id = #{id};
+	</select>
+	
+	<select id="selectByUsername" resultType="com.danh.erp.dto.Supplier" parameterType="String">
+		SELECT * FROM supplier WHERE USERNAME = #{username};
+	</select>
+
+	<select id="selectByUsernameAndPass"
+		resultType="com.danh.erp.dto.Supplier" parameterType="String">
+		select * from supplier where username = #{username} and `password` =
+		#{password};
+	</select>
+
+	<insert id="insert" parameterType="com.danh.erp.dto.Supplier">
+insert into supplier (supplierCode, supplierName, address, email, phone) value (#{supplier.supplierCode}, #{supplier.supplierName},#{supplier.address},#{supplier.email}, #{supplier.phone});
+	</insert>
+
+	<update id="update" parameterType="com.danh.erp.dto.Supplier">
+		UPDATE supplier SET supplierCode = #{supplier.supplierCode},supplierName = #{supplier.supplierName},address = #{supplier.address}, email =#{supplier.email}, phone = #{supplier.phone} WHERE id = #{supplier.id};
+	</update>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from supplier where id = #{id};
+	</delete>
+
+</mapper>

@@ -7,33 +7,34 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { CONFIG } from "../../ultils/constants";
-import SignUpSupplier from "./CreateSupplier";
+import CreateInventory from "./CreateInventory";
 
-function Supplier() {
-  const [dataSupplier, setDataSupplier] = useState([]);
+function Inventory() {
+  const [dataInventory, setDataInventory] = useState([]);
   const [visibleEdit, setVisibleEdit] = useState(false);
   const [visibleDelete, setVisibleDelete] = useState(false);
   const [id, setId] = useState();
-  const [supplierCode, setSupplierCode] = useState("");
-  const [supplierName, setSupplierName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
+  const [productCode, setProductCode] = useState("");
+  const [productName, setProductName] = useState("");
+  const [unit, setUnit] = useState("");
+  const [quantity, setQuantity] = useState();
+  const [priceBuy, setPriceBuy] = useState();
+  const [priceTotal, setPriceTotal] = useState();
 
   useEffect(() => {
-    getSupplier();
+    getInventory();
   }, []);
 
-  const getSupplier = () => {
+  const getInventory = () => {
     axios
-      .get(`${CONFIG.SERVER}/supplier/get-all`)
+      .get(`${CONFIG.SERVER}/inventory/get-all`)
       .then(function (response) {
-        setDataSupplier(response.data);
+        setDataInventory(response.data);
       })
       .catch(function (error) {});
   };
 
-  const bodySupplier = (todo) => (
+  const bodyInventory = (todo) => (
     <>
       <Button
         icon="pi pi-user-edit"
@@ -55,11 +56,12 @@ function Supplier() {
 
   const onclickEdit = (todo) => {
     setId(todo.id);
-    setSupplierCode(todo.supplierCode);
-    setSupplierName(todo.supplierName);
-    setAddress(todo.address);
-    setEmail(todo.email);
-    setPhone(todo.phone);
+    setProductCode(todo.productCode);
+    setProductName(todo.productName);
+    setUnit(todo.unit);
+    setQuantity(todo.quantity);
+    setPriceBuy(todo.priceBuy);
+    setPriceTotal(todo.priceTotal);
     setVisibleEdit(true);
   };
 
@@ -84,19 +86,17 @@ function Supplier() {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
       .put(
-        `${CONFIG.SERVER}/supplier/update`,
+        `${CONFIG.SERVER}/inventory/update`,
         JSON.stringify({
           id: id,
-          supplierCode: supplierCode,
-          supplierName: supplierName,
-          address: address,
-          email: email,
-          phone: phone,
+          productCode: productCode,
+          productName: productName,
+          unit: unit,
         }),
         { headers }
       )
       .then((response) => {
-        getSupplier();
+        getInventory();
         setVisibleEdit(false);
       })
       .catch((error) => console.log(error));
@@ -127,33 +127,33 @@ function Supplier() {
   const onClickDelete = (todo) => {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
-      .delete(`${CONFIG.SERVER}/supplier/delete-by-id/${id}`, headers)
+      .delete(`${CONFIG.SERVER}/inventory/delete-by-id/${id}`, headers)
       .then((response) => {
         setVisibleDelete(false);
-        getSupplier();
+        getInventory();
       })
       .catch((error) => console.log(error));
   };
 
   return (
     <div className="App">
-      <SignUpSupplier getSupplier={getSupplier} />
+      <CreateInventory getInventory={getInventory} />
       <div className="card">
-        <DataTable value={dataSupplier} tableStyle={{ minWidth: "50rem" }}>
-          <Column field="id" header="ID"></Column>
-          <Column field="supplierCode" header="SupplierCode"></Column>
-          <Column field="supplierName" header="SupplierName"></Column>
-          <Column field="address" header="Address"></Column>
-          <Column field="email" header="Email"></Column>
-          <Column field="phone" header="Phone"></Column>
-          <Column header="Active" body={bodySupplier}></Column>
+        <DataTable value={dataInventory} tableStyle={{ minWidth: "50rem" }}>
+          <Column field="productCode" header="ProductCode"></Column>
+          <Column field="productName" header="ProductName"></Column>
+          <Column field="unit" header="Unit"></Column>
+          <Column field="quantity" header="Quantity"></Column>
+          <Column field="priceBuy" header="PriceBuy"></Column>
+          <Column field="priceTotal" header="PriceTotal"></Column>
+          <Column header="Active" body={bodyInventory}></Column>
         </DataTable>
       </div>
 
       {/* Edit */}
       <div className="card flex justify-content-center">
         <Dialog
-          header="Edit"
+          header="Header"
           style={{ width: "50vw", textAlign: "center" }}
           visible={visibleEdit}
           onHide={() => setVisibleEdit(false)}
@@ -161,58 +161,68 @@ function Supplier() {
         >
           <div className="">
             <div className="flex flex-column gap-2">
-              <div className="in-block">
-                <label className="labelInputSupplier">SupplierCode: </label>{" "}
+              <div className="in-block-inventory">
+                <label className="labelInputInventory">ProductCode: </label>{" "}
                 <br />
                 <InputText
-                  aria-describedby="username-help"
-                  value={supplierCode}
-                  onChange={(e) => setSupplierCode(e.target.value)}
+                  aria-describedby="productCode-help"
+                  value={productCode}
+                  onChange={(e) => setProductCode(e.target.value)}
+                  disabled
                 />
               </div>
-              <div className="in-block">
-                <label className="labelInputSupplier">SupplierName: </label>{" "}
+              <div className="in-block-inventory">
+                <label className="labelInputInventory">ProductName: </label>{" "}
                 <br />
                 <InputText
-                  type="text"
-                  aria-describedby="password-help"
-                  value={supplierName}
-                  onChange={(e) => setSupplierName(e.target.value)}
+                  type="productName"
+                  aria-describedby="productName-help"
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
                 />
-                <small id="password-help"></small>
+                <small id="productName-help"></small>
               </div>
 
-              <div className="in-block">
-                <label className="labelInputSupplier">Address: </label> <br />
+              <div className="in-block-inventory">
+                <label className="labelInputInventory">Unit: </label> <br />
                 <InputText
-                  type="text"
-                  aria-describedby="rePassword-help"
-                  value={address}
-                  onChange={(e) => setAddress(e.target.value)}
+                  id="unit"
+                  aria-describedby="unit-help"
+                  value={unit}
+                  onChange={(e) => setUnit(e.target.value)}
                 />
-              </div>
-              <div className="in-block">
-                <label className="labelInputSupplier">Email: </label> <br />
-                <InputText
-                  id="email"
-                  aria-describedby="email-help"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-                <small id="email-help"></small>
+                <small id="unit-help"></small>
               </div>
             </div>
 
             <div className="flex flex-column gap-2">
-              <div className="in-block">
-                <label className="labelInputSupplier">Phone: </label> <br />
+              <div className="in-block-inventory">
+                <label className="labelInputInventory">Quantity: </label> <br />
                 <InputText
-                  id="phone"
-                  aria-describedby="phone-help"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  aria-describedby="quantity-help"
+                  value={quantity}
+                  onChange={(e) => setQuantity(e.target.value)}
                 />
-                <small id="phone-help"></small>
+              </div>
+              <div className="in-block-inventory">
+                <label className="labelInputInventory">PriceBuy: </label> <br />
+                <InputText
+                  type="priceBuy"
+                  aria-describedby="priceBuy-help"
+                  value={priceBuy}
+                  onChange={(e) => setPriceBuy(e.target.value)}
+                />
+              </div>
+
+              <div className="in-block-inventory">
+                <label className="labelInputInventory">PriceTotal: </label>{" "}
+                <br />
+                <InputText
+                  id="priceTotal"
+                  aria-describedby="priceTotal-help"
+                  value={priceTotal}
+                  onChange={(e) => setPriceTotal(e.target.value)}
+                />
               </div>
             </div>
           </div>
@@ -233,4 +243,4 @@ function Supplier() {
   );
 }
 
-export default Supplier;
+export default Inventory;

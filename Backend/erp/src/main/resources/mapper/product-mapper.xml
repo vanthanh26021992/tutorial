@@ -15,11 +15,11 @@
 	</select>
 	
 	<insert id="insert" parameterType="com.danh.erp.dto.Product">
-insert into product (productCode, productName, unit, buyPrice) value (#{product.productCode}, #{product.productName},#{product.unit},#{product.buyPrice});
+insert into product (productCode, productName, unit) value (#{product.productCode}, #{product.productName},#{product.unit});
 	</insert>
 
 	<update id="update" parameterType="com.danh.erp.dto.Product">
-		UPDATE product SET productCode = #{product.productCode},productName = #{product.productName},unit = #{product.unit}, buyPrice =#{product.buyPrice} WHERE id = #{product.id};
+		UPDATE product SET productCode = #{product.productCode},productName = #{product.productName},unit = #{product.unit} WHERE id = #{product.id};
 	</update>
 
 	<delete id="deleteById" parameterType="Long" >

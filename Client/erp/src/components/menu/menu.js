@@ -4,6 +4,7 @@ import Account from "../Account";
 import Employee from "../employee/Employee";
 import Product from "../product/product";
 import Supplier from "../supplier/supplier";
+import Inventory from "../inventory/inventory";
 
 export default function MenuComponent() {
   const items = [
@@ -11,6 +12,7 @@ export default function MenuComponent() {
     { label: "Employee", icon: "pi pi-fw pi-trash", url: "/employee" },
     { label: "Supplier", icon: "pi pi-fw pi-trash", url: "/supplier" },
     { label: "Product", icon: "pi pi-fw pi-trash", url: "/product" },
+    { label: "Inventory", icon: "pi pi-fw pi-trash", url: "/inventory" },
   ];
 
   return (
@@ -23,6 +25,7 @@ export default function MenuComponent() {
           <Route path="/employee" element={<Employee />} />
           <Route path="/supplier" element={<Supplier />} />
           <Route path="/product" element={<Product />} />
+          <Route path="/inventory" element={<Inventory />} />
         </Routes>
       </div>
     </>

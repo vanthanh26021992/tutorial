@@ -91,7 +91,7 @@ function Account() {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
       .put(
-        `${CONFIG.SERVER}/update`,
+        `${CONFIG.SERVER}/account/update`,
         JSON.stringify({
           id: id,
           username: username,
@@ -131,7 +131,7 @@ function Account() {
   const onClickDelete = (todo) => {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
-      .delete(`${CONFIG.SERVER}/delete/${id}`, headers)
+      .delete(`${CONFIG.SERVER}/account/delete/${id}`, headers)
       .then((response) => {
         setVisibleDelete(false);
         getAccounts();

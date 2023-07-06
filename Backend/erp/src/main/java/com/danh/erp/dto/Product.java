@@ -5,15 +5,13 @@ private Long id;
 private String productCode;
 private String productName;
 private String unit;
-private double buyPrice;
 
-public Product(Long id, String productCode, String productName, String unit, double buyPrice) {
+public Product(Long id, String productCode, String productName, String unit) {
   super();
   this.id = id;
   this.productCode = productCode;
   this.productName = productName;
   this.unit = unit;
-  this.buyPrice = buyPrice;
 }
 
 public Long getId() {
@@ -48,13 +46,6 @@ public void setUnit(String unit) {
   this.unit = unit;
 }
 
-public double getBuyPrice() {
-  return buyPrice;
-}
-
-public void setBuyPrice(double buyPrice) {
-  this.buyPrice = buyPrice;
-}
 
 
 }

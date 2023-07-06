@@ -17,7 +17,6 @@ function Product() {
   const [productCode, setProductCode] = useState("");
   const [productName, setProductName] = useState("");
   const [unit, setUnit] = useState("");
-  const [buyPrice, setBuyPrice] = useState("");
 
   useEffect(() => {
     getProduct();
@@ -57,7 +56,6 @@ function Product() {
     setProductCode(todo.productCode);
     setProductName(todo.productName);
     setUnit(todo.unit);
-    setBuyPrice(todo.buyPrice);
     setVisibleEdit(true);
   };
 
@@ -82,13 +80,12 @@ function Product() {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
       .put(
-        `${CONFIG.SERVER}/update-product`,
+        `${CONFIG.SERVER}/product/update`,
         JSON.stringify({
           id: id,
           productCode: productCode,
           productName: productName,
           unit: unit,
-          buyPrice: buyPrice,
         }),
         { headers }
       )
@@ -124,7 +121,7 @@ function Product() {
   const onClickDelete = (todo) => {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
     axios
-      .delete(`${CONFIG.SERVER}/delete-product-by-id/${id}`, headers)
+      .delete(`${CONFIG.SERVER}/product/delete-by-id/${id}`, headers)
       .then((response) => {
         setVisibleDelete(false);
         getProduct();
@@ -137,11 +134,9 @@ function Product() {
       <CreateProduct getProduct={getProduct} />
       <div className="card">
         <DataTable value={dataProduct} tableStyle={{ minWidth: "50rem" }}>
-          <Column field="id" header="ID"></Column>
           <Column field="productCode" header="productCode"></Column>
           <Column field="productName" header="productName"></Column>
           <Column field="unit" header="unit"></Column>
-          <Column field="buyPrice" header="buyPrice"></Column>
           <Column header="Active" body={bodyProduct}></Column>
         </DataTable>
       </div>
@@ -157,7 +152,7 @@ function Product() {
         >
           <div className="">
             <div className="flex flex-column gap-2">
-              <div className="in-block">
+              <div className="in-block-product">
                 <label className="labelInputProduct">productCode: </label>{" "}
                 <br />
                 <InputText
@@ -167,7 +162,7 @@ function Product() {
                   disabled
                 />
               </div>
-              <div className="in-block">
+              <div className="in-block-product">
                 <label className="labelInputProduct">productName: </label>{" "}
                 <br />
                 <InputText
@@ -179,7 +174,7 @@ function Product() {
                 <small id="productName-help"></small>
               </div>
 
-              <div className="in-block">
+              <div className="in-block-product">
                 <label className="labelInputProduct">unit: </label> <br />
                 <InputText
                   id="unit"
@@ -188,16 +183,6 @@ function Product() {
                   onChange={(e) => setUnit(e.target.value)}
                 />
                 <small id="unit-help"></small>
-              </div>
-
-              <div className="in-block">
-                <label className="labelInputProduct">buyPrice: </label> <br />
-                <InputText
-                  id="buyPrice"
-                  aria-describedby="buyPrice-help"
-                  value={buyPrice}
-                  onChange={(e) => setBuyPrice(e.target.value)}
-                />
               </div>
             </div>
           </div>

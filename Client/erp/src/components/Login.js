@@ -28,7 +28,9 @@ function Login() {
   const onclickLoginAccount = (event) => {
     event.preventDefault();
     axios
-      .get(`${CONFIG.SERVER}/get-account-by-name-pass/${username}/${password}`)
+      .get(
+        `${CONFIG.SERVER}/account/get-account-by-name-pass/${username}/${password}`
+      )
       .then(function (response) {
         if (!response.data) {
           setMessage("Error password or user");

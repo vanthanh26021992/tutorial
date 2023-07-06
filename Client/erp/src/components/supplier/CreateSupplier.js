@@ -7,7 +7,7 @@ import "primereact/resources/themes/lara-light-indigo/theme.css";
 import React, { useState } from "react";
 import { CONFIG } from "../../ultils/constants";
 
-function SignUpSupplier({ getSupplier }) {
+function CreateSupplier({ getSupplier }) {
   const [visibleSignUpEmloyee, setVisibleSignUpSupplier] = useState(false);
   const [supplierCode, setSupplierCode] = useState("");
   const [supplierName, setSupplierName] = useState("");
@@ -41,7 +41,7 @@ function SignUpSupplier({ getSupplier }) {
     <div className="App">
       <header>
         <Button
-          label="Sign up"
+          label="Create new supplier"
           text
           onClick={() => setVisibleSignUpSupplier(true)}
         />
@@ -134,4 +134,4 @@ function SignUpSupplier({ getSupplier }) {
   );
 }
 
-export default SignUpSupplier;
+export default CreateSupplier;
