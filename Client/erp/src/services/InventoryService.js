@@ -1,11 +1,11 @@
 import axios from "axios";
 import { CONFIG } from "../ultils/constants";
 
-const ProductService = {
-  async searchProductByName(name) {
+const InventoryService = {
+  async searchInventoryByName(name) {
     let data;
     await axios
-      .get(`${CONFIG.SERVER}/product/search-by-name`, {
+      .get(`${CONFIG.SERVER}/Inventory/search-by-name`, {
         params: { name: name },
       })
       .then((res) => (data = res.data))
@@ -14,4 +14,4 @@ const ProductService = {
   },
 };
 
-export default ProductService;
+export default InventoryService;

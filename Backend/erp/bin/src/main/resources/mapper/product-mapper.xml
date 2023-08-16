@@ -5,10 +5,6 @@
 	<select id="selectAll" resultType="com.danh.erp.dto.Product">
 		select * from product;
 	</select>
-	
-	<select id="searchProductByName" resultType="com.danh.erp.dto.Product">
-		select * from product  where productName LIKE CONCAT('%', #{name}, '%') OR productCode LIKE CONCAT('%', #{name}, '%');
-	</select>
 
 	<select id="selectByCode" resultType="com.danh.erp.dto.Product" parameterType="String">
 		select * from product where productCode = #{code};

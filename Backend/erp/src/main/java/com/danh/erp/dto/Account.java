@@ -9,10 +9,12 @@ public class Account {
   private String phone;
   private String address;
   private String gender;
+  private String create_date;
+  private String update_date;
+  
   public Account() {
     super();
   }
-  
   
   public Account(String username, String password) {
     this.username = username;
@@ -20,19 +22,37 @@ public class Account {
   }
 
   public Account(long id, String username, String password, String fullname, int age, String phone, String address,
-      String gender) {
-    super();
-    this.id = id;
-    this.username = username;
-    this.password = password;
-    this.fullname = fullname;
-    this.age = age;
-    this.phone = phone;
-    this.address = address;
-    this.gender = gender;
-  }
+		String gender, String create_date, String update_date) {
+	super();
+	this.id = id;
+	this.username = username;
+	this.password = password;
+	this.fullname = fullname;
+	this.age = age;
+	this.phone = phone;
+	this.address = address;
+	this.gender = gender;
+	this.create_date = create_date;
+	this.update_date = update_date;
+}
 
-  public long getId() {
+public String getCreate_date() {
+	return create_date;
+}
+
+public void setCreate_date(String create_date) {
+	this.create_date = create_date;
+}
+
+public String getUpdate_date() {
+	return update_date;
+}
+
+public void setUpdate_date(String update_date) {
+	this.update_date = update_date;
+}
+
+public long getId() {
     return id;
   }
 
@@ -82,5 +102,4 @@ public class Account {
   public void setGender(String gender) {
     this.gender = gender;
   }
-  
 }

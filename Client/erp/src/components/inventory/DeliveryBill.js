@@ -7,56 +7,44 @@ import { InputText } from "primereact/inputtext";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import React, { useState } from "react";
-import ProductService from "../../services/productService";
+import InventoryService from "../../services/InventoryService";
 import { CONFIG } from "../../ultils/constants";
-import moment from "moment";
 
-function CreateInventory({ getInventory, getAccounts }) {
-  const [visibleSignUpinventory, setVisibleSignUpInventory] = useState(false);
+function DeliveryBill({ getInventory, getAccounts }) {
+  const [visibleDeliveryBill, setVisibleDeliveryBill] = useState(false);
   const [inventoryName, setInventoryName] = useState("");
   const [unit, setUnit] = useState("");
   const [quantity, setQuantity] = useState();
   const [priceBuy, setPriceBuy] = useState();
   const [priceTotal, setPriceTotal] = useState();
   const [products, setProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
-  const date = moment().format("YYYYMMDD");
+  const [selectedProduct, setSelectedProduct] = useState("");
 
-  const onClickSignUpInventory = (todo) => {
+  const onClickDiliveryBill = (todo) => {
     const headers = { "Content-Type": "application/json;charset=utf-8" };
-    console.log("productCode ", selectedProduct.productCode);
-    console.log("inventoryName ", inventoryName);
-    console.log("unit ", unit);
-    console.log("quantity ", quantity);
-    console.log("priceBuy ", priceBuy);
-    console.log("priceTotal ", priceTotal);
-    console.log("date ", date);
-    let object = JSON.stringify({
-      productId: selectedProduct.id,
-      productCode: selectedProduct.productCode,
-      productName: inventoryName,
-      unit: unit,
-      quantity: quantity,
-      priceBuy: priceBuy,
-      priceTotal: priceTotal,
-      date: date,
-    });
     axios
-      .post(`${CONFIG.SERVER}/inventory/insert`, object, { headers })
+      .post(
+        `${CONFIG.SERVER}/inventory/update`,
+        JSON.stringify({
+          productId: selectedProduct.id,
+          productsCode: selectedProduct.productCode,
+          productsName: inventoryName,
+          unit: unit,
+          quantity: quantity,
+          priceBuy: priceBuy,
+          priceTotal: priceTotal,
+        }),
+        { headers }
+      )
       .then((response) => {
         getInventory();
-        setSelectedProduct("");
-        setInventoryName("");
-        setUnit("");
       })
       .catch((error) => console.log(error));
-    setVisibleSignUpInventory(false);
-    // set
+    setVisibleDeliveryBill(false);
   };
 
-  const searchProduct = async (event) => {
-    console.log(selectedProduct);
-    const products = await ProductService.searchProductByName(event.query);
+  const searchInventory = async (event) => {
+    const products = await InventoryService.searchInventoryByName(event.query);
     setProducts(products);
   };
 
@@ -69,41 +57,27 @@ function CreateInventory({ getInventory, getAccounts }) {
 
   const onChangePrice = (e) => {
     setPriceBuy(e.value);
-    onChangePriceTotal();
   };
 
   const onChangeQuantity = (e) => {
     setQuantity(e.value);
-    onChangePriceTotal();
-  };
-
-  const onChangePriceTotal = (e) => {
-    setPriceTotal(quantity * priceBuy);
-  };
-
-  const onHide = () => {
-    setVisibleSignUpInventory(false);
-    setSelectedProduct("");
-    setInventoryName("");
-    setUnit("");
-    //TODO
-  };
-
-  const onShow = () => {
-    setVisibleSignUpInventory(true);
-    //TODO
+    console.log(priceTotal);
   };
 
   return (
     <div className="App">
       <header>
-        <Button label="Inventory In" text onClick={() => onShow()} />
+        <Button
+          label="Inventory Out"
+          text
+          onClick={() => setVisibleDeliveryBill(true)}
+        />
         <div className=" flex justify-content-center">
           <Dialog
-            header="Inventory In"
+            header="Inventory Out"
             style={{ width: "50vw", textAlign: "center" }}
-            visible={visibleSignUpinventory}
-            onHide={() => onHide(false)}
+            visible={visibleDeliveryBill}
+            onHide={() => setVisibleDeliveryBill(false)}
           >
             <div className="">
               <div className="">
@@ -117,7 +91,7 @@ function CreateInventory({ getInventory, getAccounts }) {
                       field="productCode"
                       value={selectedProduct}
                       suggestions={products}
-                      completeMethod={searchProduct}
+                      completeMethod={searchInventory}
                       onChange={(e) => onSelecteProduct(e)}
                     />
                   </div>
@@ -141,10 +115,11 @@ function CreateInventory({ getInventory, getAccounts }) {
                     <label className="labelInputinventory">Unit: </label> <br />
                     <InputText
                       id="unit"
-                      value={unit}
                       aria-describedby="unit-help"
+                      value={unit}
                       onChange={(e) => setUnit(e.target.value)}
                     />
+                    <small id="unit-help"></small>
                   </div>
                 </div>
                 <div className="flex flex-column gap-2">
@@ -175,26 +150,12 @@ function CreateInventory({ getInventory, getAccounts }) {
                     <br />
                     <InputNumber
                       id="priceTotal"
-                      // value={priceBuy * quantity}
-                      value={priceTotal}
+                      value={priceBuy * quantity}
                       aria-describedby="priceTotal-help"
-                      onValueChange={(e) => onChangePriceTotal(e)}
-                    />
-                  </div>
-                </div>
-
-                {/* <div className="flex flex-column gap-2">
-                  <div className="in-block-inventory">
-                    <label className="labelInputinventory">Quantity: </label>{" "}
-                    <br />
-                    <InputText
-                      required
-                      value={date}
-                      aria-describedby="inventoryCode-help"
                       onChange={(e) => setPriceTotal(e.target.value)}
                     />
                   </div>
-                </div> */}
+                </div>
               </div>
 
               <div className="center">
@@ -202,13 +163,16 @@ function CreateInventory({ getInventory, getAccounts }) {
                   label="Yes"
                   icon="pi pi-check"
                   type="submit"
-                  onClick={onClickSignUpInventory}
+                  onClick={onClickDiliveryBill}
                 />
                 <Button
                   label="No"
                   icon="pi pi-times"
                   onClick={() => {
-                    onHide();
+                    setVisibleDeliveryBill(false);
+                    setSelectedProduct("");
+                    setInventoryName("");
+                    setUnit("");
                   }}
                   className="p-button-text"
                 />
@@ -221,4 +185,4 @@ function CreateInventory({ getInventory, getAccounts }) {
   );
 }
 
-export default CreateInventory;
+export default DeliveryBill;

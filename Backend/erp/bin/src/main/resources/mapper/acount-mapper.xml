@@ -22,8 +22,8 @@
 	</select>
 
 	<insert id="insert" parameterType="com.danh.erp.dto.Account" useGeneratedKeys="true" keyProperty="account.id" keyColumn="ID">
-		INSERT INTO Account (username, password, fullname, age, phone, address, gender,create_date, update_date)
-		VALUES (#{account.username},#{account.password},#{account.fullname},#{account.age}, #{account.phone}, #{account.address},#{account.gender},#{account.create_date},#{account.update_date})
+		INSERT INTO Account (username, password, fullname, age, phone, address, gender )
+		VALUES (#{account.username},#{account.password},#{account.fullname},#{account.age}, #{account.phone}, #{account.address},#{account.gender})
 	</insert>
 
 	<update id="update" parameterType="com.danh.erp.dto.Account" useGeneratedKeys="true" keyProperty="account.id" keyColumn="ID">

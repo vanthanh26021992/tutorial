@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.danh.erp.mapper.EmployeeMapper">
+	<select id="selectAll" resultType="com.danh.erp.dto.Employee">
+		SELECT * FROM account a INNER JOIN  employee e ON  a.id=e.accountId ;
+	</select>
+
+	<select id="selectByEmployee" resultType="com.danh.erp.dto.Employee" parameterType="String">
+		select * from employee where username = #{employee.username} and
+		`password` = #{employee.password};
+	</select>
+
+	<select id="selectById" resultType="com.danh.erp.dto.Employee" parameterType="Long">
+		SELECT * FROM employee WHERE id = #{id};
+	</select>
+	
+	<select id="selectByUsername" resultType="com.danh.erp.dto.Employee" parameterType="String">
+		SELECT * FROM employee WHERE USERNAME = #{username};
+	</select>
+
+	<select id="selectByUsernameAndPass"
+		resultType="com.danh.erp.dto.Employee" parameterType="String">
+		select * from employee where username = #{username} and `password` =
+		#{password};
+	</select>
+
+	<insert id="insert" parameterType="com.danh.erp.dto.Employee">
+		INSERT INTO employee (accountId,startDate,department,endDate,salary,status )
+		VALUES (#{employee.accountId},#{employee.startDate},
+		#{employee.department}, #{employee.endDate}, #{employee.salary},
+		#{employee.status});
+	</insert>
+
+	<update id="update" parameterType="com.danh.erp.dto.Employee">
+		UPDATE employee SET startDate = #{employee.startDate},department = #{employee.department},endDate = #{employee.endDate}, salary =#{employee.salary}, status = #{employee.status} WHERE accountId = #{employee.accountId};
+	</update>
+
+	<delete id="deleteByAccountId" parameterType="Long" >
+		delete from employee where accountId = #{accountId};
+	</delete>
+
+</mapper>

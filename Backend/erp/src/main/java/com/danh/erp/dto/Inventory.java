@@ -8,16 +8,26 @@ private String unit;
 private int quantity;
 private long priceBuy;
 private long priceTotal;
+private String date;
 
 public Inventory(long id, String productCode, String productName, String unit, int quantity, long priceBuy,
-    long priceTotal) {
-  this.id = id;
-  this.productCode = productCode;
-  this.productName = productName;
-  this.unit = unit;
-  this.quantity = quantity;
-  this.priceBuy = priceBuy;
-  this.priceTotal = priceTotal;
+		long priceTotal, String date) {
+	this.id = id;
+	this.productCode = productCode;
+	this.productName = productName;
+	this.unit = unit;
+	this.quantity = quantity;
+	this.priceBuy = priceBuy;
+	this.priceTotal = priceTotal;
+	this.date = date;
+}
+
+public String getDate() {
+	return date;
+}
+
+public void setDate(String date) {
+	this.date = date;
 }
 
 public long getId() {

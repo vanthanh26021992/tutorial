@@ -142,7 +142,7 @@ function Account() {
   return (
     <div className="App">
       <div className="card">
-        <SignUp />
+        <SignUp getAccounts={getAccounts} />
       </div>
       <div className="card">
         <DataTable value={data} tableStyle={{ minWidth: "50rem" }}>
@@ -154,6 +154,8 @@ function Account() {
           <Column field="phone" header="Phone"></Column>
           <Column field="address" header="Address"></Column>
           <Column field="gender" header="Gender"></Column>
+          <Column field="create_date" header="Create_date"></Column>
+          <Column field="update_date" header="Update_date"></Column>
           <Column header="Active" body={bodyAccount}></Column>
         </DataTable>
       </div>

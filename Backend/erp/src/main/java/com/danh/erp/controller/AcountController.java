@@ -21,11 +21,25 @@ import com.danh.erp.mapper.EmployeeMapper;
 @RequestMapping("/account")
 public class AcountController {
 
-  @Autowired
-  private AcountMapper mapper;
+	// design pattern, solid
+	// IOC: AppplicationContext 
+	// layer
+	
+ // @Autowired
+  private AcountMapper mapper ;
+  
   @Autowired
   private EmployeeMapper eMapper;
 
+  public AcountController(AcountMapper mapper) {
+	  this.mapper = mapper;
+}
+  
+  @Autowired
+  public void setMapper(AcountMapper mapper) {
+	  this.mapper = mapper;
+  }
+  
   @GetMapping("get-all")
   public List<Account> selectAll() {
     return mapper.selectAll();

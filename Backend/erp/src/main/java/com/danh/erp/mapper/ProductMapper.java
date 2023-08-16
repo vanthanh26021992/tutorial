@@ -10,6 +10,9 @@ import com.danh.erp.dto.Product;
 @Mapper
 public interface ProductMapper {
   List<Product> selectAll();
+  
+  List<Product> searchProductByName(@Param("name") String name);
+  
   Product selectById(@Param("id") Long id);
   Product selectByCode(@Param("code") String code);
   

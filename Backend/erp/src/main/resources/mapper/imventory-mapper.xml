@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.danh.erp.mapper.InventoryMapper">
+	<select id="selectAll" resultType="com.danh.erp.dto.Inventory">
+		select * from inventory WHERE quantity > 0
+		  <if test="search.productCode != null">
+		    AND productCode LIKE CONCAT('%', #{search.productCode}, '%'))
+		  </if>
+		  <if test="search.productName != null">
+		    AND productName LIKE CONCAT('%', #{search.productName}, '%'))
+		  </if>
+	</select>
+
+	<select id="searchInventoryByName" resultType="com.danh.erp.dto.Inventory">
+		select * from inventory  where (productName LIKE CONCAT('%', #{name}, '%') OR productCode LIKE CONCAT('%', #{name}, '%')) and date = (select min(date)from inventory where quantity >0);
+	</select>
+
+	<select id="selectByCode" resultType="com.danh.erp.dto.Inventory" parameterType="String">
+		select * from inventory where productCode = #{code} and date = (select min(date)from inventory where quantity >0);
+	</select>
+
+	<select id="selectById" resultType="com.danh.erp.dto.Inventory" parameterType="Long">
+		SELECT * FROM inventory WHERE id = #{id};
+	</select>
+	
+	<select id="selectByUsername" resultType="com.danh.erp.dto.Inventory" parameterType="String">
+		SELECT * FROM inventory WHERE productName = #{productName};
+	</select>
+
+	<insert id="insert" parameterType="com.danh.erp.dto.Inventory">
+		INSERT INTO `inventory` (productCode, productName, unit, quantity,priceBuy,priceTotal,date) value (#{inventory.productCode}, #{inventory.productName},#{inventory.unit},#{inventory.quantity}, #{inventory.priceBuy}, #{inventory.priceTotal}, #{inventory.date});
+	</insert>
+
+	<update id="update" parameterType="com.danh.erp.dto.Inventory">
+		UPDATE inventory SET productCode = #{inventory.productCode},productName = #{inventory.productName},unit = #{inventory.unit}, quantity =#{inventory.quantity}, priceBuy = #{inventory.priceBuy}, priceTotal = #{inventory.priceTotal} WHERE id = #{inventory.id};
+	</update>
+
+		<update id="updateByCode" parameterType="com.danh.erp.dto.Inventory">
+		UPDATE inventory SET productCode = #{inventory.productCode},productName = #{inventory.productName},unit = #{inventory.unit}, quantity =#{inventory.quantity}, priceBuy = #{inventory.priceBuy}, priceTotal = #{inventory.priceTotal} WHERE productCode = #{inventory.productCode};
+	</update>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from inventory where id = #{id};
+	</delete>
+</mapper>

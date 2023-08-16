@@ -1,13 +1,14 @@
-import React, { useState } from "react";
-import "primereact/resources/themes/lara-light-indigo/theme.css";
-import "primereact/resources/primereact.min.css";
-import { Button } from "primereact/button";
-import { InputText } from "primereact/inputtext";
-import { Dialog } from "primereact/dialog";
-import { validPassword, validUsername } from "./Regex";
-import { Dropdown } from "primereact/dropdown";
-import { CONFIG } from "../ultils/constants";
 import axios from "axios";
+import moment from "moment";
+import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
+import { Dropdown } from "primereact/dropdown";
+import { InputText } from "primereact/inputtext";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import React, { useState } from "react";
+import { CONFIG } from "../ultils/constants";
+import { validPassword, validUsername } from "./Regex";
 
 function SignUp(props) {
   const [visibleSignUp, setVisibleSignUp] = useState(false);
@@ -23,6 +24,7 @@ function SignUp(props) {
   const [messagePassInvalid, setMessagePassInvalid] = useState(false);
   const [messageUsername, setMessageUsername] = useState(false);
   const genderList = [{ name: "Male" }, { name: "Female" }];
+  const date = moment().format("YYYYMMDD");
 
   const onClickSignUp = (todo) => {
     console.log("username: " + username);
@@ -33,6 +35,7 @@ function SignUp(props) {
     console.log("phone: " + phone);
     console.log("address: " + address);
     console.log("gender: " + gender.name);
+    console.log("create_date: " + date);
 
     if (password !== rePassword) {
       setMessagePass("Pass and re-pass do not match!");
@@ -66,7 +69,7 @@ function SignUp(props) {
       const headers = { "Content-Type": "application/json;charset=utf-8" };
       axios
         .post(
-          `${CONFIG.SERVER}/insert`,
+          `${CONFIG.SERVER}/account/insert`,
           JSON.stringify({
             username: username,
             password: password,
@@ -75,6 +78,8 @@ function SignUp(props) {
             phone: phone,
             address: address,
             gender: gender.name,
+            create_date: date,
+            update_date: "",
           }),
           { headers }
         )

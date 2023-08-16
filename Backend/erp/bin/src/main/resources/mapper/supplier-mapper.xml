@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.danh.erp.mapper.InventoryMapper">
+	<select id="selectAll" resultType="com.danh.erp.dto.Inventory">
+		select * from inventory;
+	</select>
+
+	<select id="selectByCode" resultType="com.danh.erp.dto.Inventory" parameterType="String">
+		select * from inventory where productCode = #{code};
+	</select>
+
+	<select id="selectById" resultType="com.danh.erp.dto.Inventory" parameterType="Long">
+		SELECT * FROM inventory WHERE id = #{id};
+	</select>
+	
+	<select id="selectByUsername" resultType="com.danh.erp.dto.Inventory" parameterType="String">
+		SELECT * FROM inventory WHERE productName = #{productName};
+	</select>
+
+	<insert id="insert" parameterType="com.danh.erp.dto.Inventory">
+	insert into inventory (productCode, productName, unit,quantity,priceBuy,priceTotal) value (#{inventory.productCode}, #{inventory.productName},#{inventory.unit},#{inventory.quantity}, #{inventory.priceBuy}, #{inventory.priceTotal});
+	</insert>
+
+	<update id="update" parameterType="com.danh.erp.dto.Inventory">
+		UPDATE inventory SET productCode = #{inventory.productCode},productName = #{inventory.productName},unit = #{inventory.unit}, quantity =#{inventory.quantity}, priceBuy = #{inventory.priceBuy}, priceTotal = #{inventory.priceTotal} WHERE id = #{inventory.id};
+	</update>
+
+	<delete id="deleteById" parameterType="Long" >
+		delete from inventory where id = #{id};
+	</delete>
+
+</mapper>

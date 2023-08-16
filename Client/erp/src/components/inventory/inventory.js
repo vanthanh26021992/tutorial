@@ -8,6 +8,7 @@ import { InputText } from "primereact/inputtext";
 import React, { useEffect, useState } from "react";
 import { CONFIG } from "../../ultils/constants";
 import CreateInventory from "./CreateInventory";
+import DeliveryBill from "./DeliveryBill";
 
 function Inventory() {
   const [dataInventory, setDataInventory] = useState([]);
@@ -137,7 +138,11 @@ function Inventory() {
 
   return (
     <div className="App">
-      <CreateInventory getInventory={getInventory} />
+      <div className="receipt">
+        <CreateInventory getInventory={getInventory} />
+        <DeliveryBill getInventory={getInventory} />
+      </div>
+
       <div className="card">
         <DataTable value={dataInventory} tableStyle={{ minWidth: "50rem" }}>
           <Column field="productCode" header="ProductCode"></Column>
@@ -146,6 +151,7 @@ function Inventory() {
           <Column field="quantity" header="Quantity"></Column>
           <Column field="priceBuy" header="PriceBuy"></Column>
           <Column field="priceTotal" header="PriceTotal"></Column>
+          <Column field="date" header="Date"></Column>
           <Column header="Active" body={bodyInventory}></Column>
         </DataTable>
       </div>
@@ -244,3 +250,5 @@ function Inventory() {
 }
 
 export default Inventory;
+
+// đánh chữ vào chọn code auto - hiện lỗi
